@@ -2,20 +2,159 @@
 <html lang="sv">
 <head>
     <meta charset="UTF-8">
-    <title>Min hemsida</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seifos Portfolio</title>
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide ikoner -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Orange gradient för Seifos tema */
+        .gradient-bg {
+            background: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);
+        }
+    </style>
 </head>
-<body>
+<body class="bg-gray-50 text-gray-900">
 
-    <h1>Välkommen till min hemsida</h1>
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white/80 backdrop-blur-md shadow-sm border-b border-orange-100">
+        <div class="max-w-5xl mx-auto px-4 py-4 flex justify-between items-center">
+            <span class="text-2xl font-bold tracking-tighter text-orange-600 uppercase">SEIFO</span>
+            <div class="space-x-8 hidden md:flex font-medium">
+                <a href="#hem" class="hover:text-orange-600 transition">Hem</a>
+                <a href="#dokument" class="hover:text-orange-600 transition">Mina Dokument</a>
+                <a href="#kontakt" class="hover:text-orange-600 transition">Kontakt</a>
+            </div>
+        </div>
+    </nav>
 
-    <p>Hej! Jag heter [DITT NAMN]</p>
+    <!-- Hero Sektion -->
+    <section id="hem" class="pt-40 pb-24 px-4 gradient-bg text-white">
+        <div class="max-w-4xl mx-auto text-center">
+            <!-- Profilbild (Avatar med blå keps, enbart mustasch och solglasögon) -->
+            <div class="w-40 h-40 bg-white rounded-full mx-auto mb-8 border-4 border-white/30 flex items-center justify-center overflow-hidden shadow-2xl">
+                <svg viewBox="0 0 100 100" class="w-full h-full">
+                    <!-- Bakgrund -->
+                    <circle cx="50" cy="50" r="50" fill="#fef3c7" />
+                    
+                    <!-- Kropp -->
+                    <path d="M20 95 C 20 70, 80 70, 80 95" fill="#4b5563" />
+                    
+                    <!-- Ansikte -->
+                    <path d="M32 45 C 32 25, 68 25, 68 45 L 68 65 C 68 82, 32 82, 32 65 Z" fill="#ffdbac" />
+                    
+                    <!-- Kort Hår (syns vid öronen) -->
+                    <path d="M32 45 L 32 55 M 68 45 L 68 55" stroke="#2d2d2d" stroke-width="4" stroke-linecap="round" />
+                    
+                    <!-- Blå Keps -->
+                    <path d="M30 42 C 30 25, 70 25, 70 42" fill="#1e40af" />
+                    <path d="M30 42 L 20 45 C 20 48, 40 50, 50 50 C 60 50, 80 48, 80 45 L 70 42" fill="#1e3a8a" />
+                    
+                    <!-- Mustasch (behålls men skägget är borttaget) -->
+                    <path d="M38 66 Q 50 62 62 66" fill="none" stroke="#2d2d2d" stroke-width="5" stroke-linecap="round" />
+                    
+                    <!-- Näsa -->
+                    <path d="M47 60 Q 50 64 53 60" fill="none" stroke="#d4a373" stroke-width="1.5" stroke-linecap="round" />
+                    
+                    <!-- Mun (leende under mustasch) -->
+                    <path d="M44 73 Q 50 76 56 73" fill="none" stroke="#111" stroke-width="1" stroke-linecap="round" />
+                    
+                    <!-- Solglasögon -->
+                    <rect x="34" y="45" width="14" height="10" rx="3" fill="#111" />
+                    <rect x="52" y="45" width="14" height="10" rx="3" fill="#111" />
+                    <path d="M48 50 L 52 50" stroke="#111" stroke-width="2" />
+                    <path d="M32 50 L 34 50 M 66 50 L 68 50" stroke="#111" stroke-width="2" />
+                </svg>
+            </div>
+            
+            <h1 class="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight">
+                Hej, jag är <span class="underline decoration-white/30">Seifo</span>.
+            </h1>
+            <p class="text-lg md:text-2xl opacity-90 mb-10 max-w-2xl mx-auto font-light">
+                Välkommen till min digitala portfolio. Här har jag samlat mina viktigaste dokument och projekt för dig att utforska.
+            </p>
+            <div class="flex justify-center gap-4">
+                <a href="#dokument" class="bg-white text-orange-600 px-10 py-4 rounded-xl font-bold hover:scale-105 transition transform shadow-xl">
+                    Visa mina arbeten
+                </a>
+            </div>
+        </div>
+    </section>
 
-    <ul>
-        <li><a href="cv.html">Mitt CV</a></li>
-        <li><a href="gymnasiearbete.html">Gymnasiearbete</a></li>
-        <li><a href="ai-projekt.html">AI-projekt</a></li>
-        <li><a href="presentation.html">AI-presentation</a></li>
-    </ul>
+    <!-- Dokument Sektion -->
+    <section id="dokument" class="py-24 px-4">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4 text-gray-800">Mina Dokument</h2>
+                <div class="w-20 h-1.5 bg-orange-500 mx-auto rounded-full"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-10">
+                <!-- CV Kort -->
+                <div class="group bg-white p-10 rounded-3xl shadow-sm border border-gray-100 hover:border-orange-200 hover:shadow-xl transition-all duration-300">
+                    <div class="w-14 h-14 bg-orange-100 text-orange-600 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-orange-600 group-hover:text-white transition-colors">
+                        <i data-lucide="file-text"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Mitt CV</h3>
+                    <p class="text-gray-600 mb-8 leading-relaxed">
+                        En sammanställning av min utbildning, arbetslivserfarenhet och de tekniska färdigheter jag har utvecklat genom åren.
+                    </p>
+                    <a href="cv.pdf" target="_blank" class="inline-flex items-center text-orange-600 font-bold hover:gap-3 transition-all">
+                        Öppna CV <i data-lucide="arrow-right-circle" class="ml-2 w-5 h-5"></i>
+                    </a>
+                </div>
 
+                <!-- Gymnasiearbete Kort -->
+                <div class="group bg-white p-10 rounded-3xl shadow-sm border border-gray-100 hover:border-orange-200 hover:shadow-xl transition-all duration-300">
+                    <div class="w-14 h-14 bg-orange-100 text-orange-600 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-orange-600 group-hover:text-white transition-colors">
+                        <i data-lucide="graduation-cap"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Gymnasiearbete</h3>
+                    <p class="text-gray-600 mb-8 leading-relaxed">
+                        Mitt fördjupningsarbete där jag utforskar ett specifikt ämne under mitt sista år på gymnasiet. 
+                    </p>
+                    <a href="gymnasiearbete.pdf" target="_blank" class="inline-flex items-center text-orange-600 font-bold hover:gap-3 transition-all">
+                        Läs rapporten <i data-lucide="arrow-right-circle" class="ml-2 w-5 h-5"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Kontakt Sektion -->
+    <section id="kontakt" class="py-24 px-4 bg-orange-50">
+        <div class="max-w-3xl mx-auto text-center">
+            <h2 class="text-4xl font-bold mb-8 text-gray-800">Sugen på att samarbeta?</h2>
+            <div class="bg-white p-12 rounded-3xl shadow-lg">
+                <p class="text-gray-600 mb-10 text-xl leading-relaxed">Du når mig enklast via e-post eller LinkedIn för frågor eller projektförslag.</p>
+                <div class="flex flex-col md:flex-row justify-center items-center gap-8">
+                    <a href="mailto:seifo07222@gmail.com" class="flex items-center gap-3 bg-gray-50 px-6 py-3 rounded-full hover:bg-orange-100 transition shadow-sm">
+                        <i data-lucide="mail" class="text-orange-600"></i>
+                        <span class="font-medium text-gray-700">seifo07222@gmail.com</span>
+                    </a>
+                    <a href="https://www.linkedin.com/in/seifo" target="_blank" class="flex items-center gap-3 bg-gray-50 px-6 py-3 rounded-full hover:bg-orange-100 transition shadow-sm">
+                        <i data-lucide="linkedin" class="text-orange-600"></i>
+                        <span class="font-medium text-gray-700">Seifo på LinkedIn</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 text-center text-gray-400 text-sm">
+        <p class="uppercase tracking-widest font-semibold mb-2 text-orange-200">Seifo</p>
+        <p>© 2024 Portfolioprojekt</p>
+    </footer>
+
+    <!-- Script för ikoner -->
+    <script>
+        lucide.createIcons();
+    </script>
 </body>
 </html>
