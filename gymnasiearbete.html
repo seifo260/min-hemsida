@@ -1,1 +1,122 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gymnasieexamen VVS</title>
 
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom right, #0f172a, #1e293b);
+            color: white;
+            text-align: center;
+        }
+
+        header {
+            padding: 60px 20px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #cbd5e1;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 25px;
+            padding: 40px;
+        }
+
+        .card {
+            background: #1e293b;
+            padding: 30px;
+            width: 280px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 0 25px rgba(59,130,246,0.5);
+        }
+
+        .card h2 {
+            margin-bottom: 15px;
+            color: #60a5fa;
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 12px 20px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #1d4ed8;
+        }
+
+        footer {
+            margin-top: 50px;
+            padding: 20px;
+            color: #94a3b8;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Gymnasieexamen VVS</h1>
+    <p>Portfolio och projekt inom VVS och fastighet</p>
+</header>
+
+<div class="container">
+
+    <div class="card">
+        <h2>Mitt CV</h2>
+        <p>Se mina erfarenheter, utbildning och kompetenser inom VVS.</p>
+        <a href="cv.html" class="btn">Öppna CV</a>
+    </div>
+
+    <div class="card">
+        <h2>Gymnasiearbete</h2>
+        <p>Mitt gymnasiearbete och dokumentation av projektet.</p>
+        <a href="gymnasiearbete.html" class="btn">Läs mer</a>
+    </div>
+
+    <div class="card">
+        <h2>AI-Projekt</h2>
+        <p>Projekt där jag arbetat med AI och modern teknik.</p>
+        <a href="ai-projekt.html" class="btn">Visa projekt</a>
+    </div>
+
+    <div class="card">
+        <h2>🎮 Mitt spel</h2>
+        <p>Ett spel jag utvecklat och publicerat online.</p>
+        <a href="https://DIN-SPELLÄNK.netlify.app" target="_blank" class="btn">
+            Spela nu
+        </a>
+    </div>
+
+</div>
+
+<footer>
+    © 2026 [DITT NAMN]
+</footer>
+
+</body>
+</html>
