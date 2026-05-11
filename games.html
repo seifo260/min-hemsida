@@ -1,1 +1,299 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Detektivkontoret</title>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --card: #1e293b;
+            --accent: #7c3aed;
+            --success: #10b981;
+            --error: #ef4444;
+            --text: #f8fafc;
+        }
 
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .game-container {
+            max-width: 900px;
+            width: 100%;
+            background: var(--card);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #334155;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+        }
+
+        .robot-status {
+            font-size: 60px;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.2rem;
+            color: #fbbf24;
+            margin-bottom: 20px;
+        }
+
+        /* Nivå-hantering */
+        .level { display: none; }
+        .level.active { display: block; }
+
+        /* Nivå 1: Drag and Drop */
+        .match-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .drop-target {
+            background: #334155;
+            padding: 20px;
+            border: 2px dashed #64748b;
+            border-radius: 8px;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .drag-item {
+            background: var(--accent);
+            padding: 15px;
+            border-radius: 6px;
+            cursor: grab;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* Nivå 2: Tabell */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: #0f172a;
+        }
+
+        .data-table th, .data-table td {
+            padding: 12px;
+            border: 1px solid #334155;
+            text-align: left;
+        }
+
+        .data-table tr:hover {
+            background: #1e293b;
+            cursor: pointer;
+        }
+
+        .bias-row { background: rgba(239, 68, 68, 0.1); }
+        .correct-row { background: rgba(16, 185, 129, 0.2) !important; }
+        .wrong-click { background: rgba(239, 68, 68, 0.4) !important; }
+
+        #feedback-box {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            min-height: 20px;
+            background: #334155;
+        }
+
+        .btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        .btn:hover { opacity: 0.9; }
+    </style>
+</head>
+<body>
+
+    <div class="game-container">
+        <div class="header">
+            <h1>🕵️‍♂️ AI-Detektiven</h1>
+            <div id="robot" class="robot-status">🤖</div>
+            <div class="stats">
+                <span>Nivå: <span id="current-level-text">1</span></span>
+                <span>Poäng: <span id="score">0</span></span>
+            </div>
+        </div>
+
+        <!-- NIVÅ 1 -->
+        <div id="level-1" class="level active">
+            <h3>Nivå 1: Matcha Begreppen</h3>
+            <p>Dra rätt bevis till rätt brottsrubricering för att förstå hur AI kan gå fel.</p>
+            <div class="match-grid">
+                <div class="column">
+                    <div class="drop-target" data-match="selection">Selection Bias</div>
+                    <div class="drop-target" data-match="history">Historical Bias</div>
+                </div>
+                <div class="column">
+                    <div class="drag-item" draggable="true" id="item-1" data-id="selection">Datan representerar inte alla användare (urvalsfel).</div>
+                    <div class="drag-item" draggable="true" id="item-2" data-id="history">Datan innehåller gamla mänskliga fördomar från förr.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NIVÅ 2 -->
+        <div id="level-2" class="level">
+            <h3>Nivå 2: Hitta Bias i Datasetet</h3>
+            <p>Här är ansökningar till ett programmeringsjobb. Markera de rader där AI:n verkar ha gett avslag (❌) på ett orättvist sätt trots hög erfarenhet.</p>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Namn</th>
+                        <th>Erfarenhet (År)</th>
+                        <th>Kön</th>
+                        <th>AI Beslut</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                    <tr onclick="checkRow(this, true, 'Bias! Trots 10 års erfarenhet fick hon avslag. Algoritmen verkar missgynna kvinnor.')">
+                        <td>Anna</td>
+                        <td>10</td>
+                        <td>Kvinna</td>
+                        <td>❌ Avslag</td>
+                    </tr>
+                    <tr onclick="checkRow(this, false, 'Korrekt beslut. 1 års erfarenhet är ofta för lite för denna tjänst.')">
+                        <td>Erik</td>
+                        <td>1</td>
+                        <td>Man</td>
+                        <td>❌ Avslag</td>
+                    </tr>
+                    <tr onclick="checkRow(this, true, 'Bias! 8 års erfarenhet men avslag pga historisk data som favoriserar män.')">
+                        <td>Maria</td>
+                        <td>8</td>
+                        <td>Kvinna</td>
+                        <td>❌ Avslag</td>
+                    </tr>
+                    <tr onclick="checkRow(this, false, 'Rimligt. 12 års erfarenhet gav godkänt.')">
+                        <td>Karl</td>
+                        <td>12</td>
+                        <td>Man</td>
+                        <td>✅ Godkänd</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="feedback-box">Väntar på din analys, detektiv...</div>
+        <button id="next-btn" class="btn" style="display: none;" onclick="goToLevel2()">Gå till Nivå 2</button>
+    </div>
+
+    <script>
+        let score = 0;
+        let foundBias = 0;
+        const robot = document.getElementById('robot');
+        const feedback = document.getElementById('feedback-box');
+        const scoreEl = document.getElementById('score');
+
+        // NIVÅ 1 LOGIK
+        document.querySelectorAll('.drag-item').forEach(item => {
+            item.addEventListener('dragstart', (e) => {
+                e.dataTransfer.setData('text', e.target.id);
+            });
+        });
+
+        document.querySelectorAll('.drop-target').forEach(target => {
+            target.addEventListener('dragover', (e) => e.preventDefault());
+            target.addEventListener('drop', (e) => {
+                e.preventDefault();
+                const id = e.dataTransfer.getData('text');
+                const el = document.getElementById(id);
+                if (target.getAttribute('data-match') === el.getAttribute('data-id')) {
+                    updateScore(10, "Rätt! Bra jobbat.");
+                    target.innerHTML = "✅ " + el.innerText;
+                    target.style.borderColor = "var(--success)";
+                    el.style.display = "none";
+                    checkLevel1Win();
+                } else {
+                    updateStatus("wrong", "Nej! Selection Bias handlar om urval, inte etiketter.");
+                }
+            });
+        });
+
+        function checkLevel1Win() {
+            const remaining = document.querySelectorAll('.drag-item[style*="display: none"]').length;
+            if (remaining === 2) {
+                document.getElementById('next-btn').style.display = "block";
+                updateStatus("happy", "Nivå 1 avklarad! Redo för fältarbete?");
+            }
+        }
+
+        // NIVÅ 2 LOGIK
+        function checkRow(row, isBias, msg) {
+            if (row.classList.contains('correct-row')) return;
+
+            if (isBias) {
+                row.classList.add('correct-row');
+                updateScore(10, msg);
+                foundBias++;
+                updateStatus("happy", "Snyggt! Du hittade bias.");
+                if (foundBias === 2) {
+                    updateStatus("happy", "Alla dolda fel hittade! Du är en sann AI-detektiv.");
+                }
+            } else {
+                row.classList.add('wrong-click');
+                updateStatus("wrong", msg);
+            }
+        }
+
+        // HJÄLPFUNKTIONER
+        function updateScore(pts, msg) {
+            score += pts;
+            scoreEl.innerText = score;
+            feedback.innerText = msg;
+            feedback.style.background = "rgba(16, 185, 129, 0.2)";
+        }
+
+        function updateStatus(type, msg) {
+            feedback.innerText = msg;
+            if (type === "happy") {
+                robot.innerText = "😊";
+                feedback.style.background = "rgba(16, 185, 129, 0.2)";
+            } else {
+                robot.innerText = "😡";
+                feedback.style.background = "rgba(239, 68, 68, 0.2)";
+            }
+        }
+
+        function goToLevel2() {
+            document.getElementById('level-1').classList.remove('active');
+            document.getElementById('level-2').classList.add('active');
+            document.getElementById('next-btn').style.display = "none";
+            document.getElementById('current-level-text').innerText = "2";
+            robot.innerText = "🕵️‍♂️";
+            feedback.innerText = "Inspektera tabellen ovan...";
+        }
+    </script>
+</body>
+</html>
